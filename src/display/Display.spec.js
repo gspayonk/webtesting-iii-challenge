@@ -1,6 +1,7 @@
 // Test away!
 import React from 'react';
 import { render } from 'react-testing-library';
+import 'react-testing-library/cleanup-after-each';
 import Display from './Display';
 
 it('defaults unlock/open',  () => {
@@ -34,3 +35,27 @@ it('gate open/closed and lock/unlocked', () => {
 
 })
 
+describe ('<Display />', () => {
+
+it('red-led class when locked/closed', () => {
+    const state = { 
+        locked: true,
+        closed: true,
+    }
+    const { getByTestId }  = render(<Display closed={state.closed} locked={state.locked} />);
+    expect(getByTestId('locked').classList.contains('red-led')).toBe(true);
+    expect(getByTestId('closed').classList.contains('red-led')).toBe(true);
+});
+
+it('green-led class when unlocked/open', () => {
+    const state = { 
+        locked: true,
+        closed: true,
+    }
+
+    const { getByTestId }  = render(<Display closed={state.closed} locked={state.locked} />);
+    expect(getByTestId('locked').classList.contains('green-led')).toBe(true);
+    expect(getByTestId('closed').classList.contains('green-led')).toBe(true);
+})
+
+})
